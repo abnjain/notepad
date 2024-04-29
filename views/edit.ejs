@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Notepad</title>
+    <link rel="stylesheet" href="/styles/style.css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-zinc-800 text-white">
+    <div class="flex flex-col items-center justify-center h-screen">
+        <div class="note bg-zinc-900 rounded-md p-10 flex flex-col items-center justify-center">
+            <form action="/edit" method="post" class="m-4 text-center">
+                <input type="text" name="title" placeholder="Old Title" class="bg-zinc-800 block m-auto mb-3 text-2xl text-zinc-400 placeholder-gray-500 text-center" value="<%= filename %>" />
+                <input type="text" name="newTitle" placeholder="Enter New Title" class="bg-zinc-800 block m-auto mb-3 text-2xl text-white placeholder-gray-500 text-center" />
+                <!-- <textarea type="textarea" name="details" placeholder="Enter Details" class="resize-none bg-zinc-800 block m-auto mb-3 text-2xl text-white placeholder-gray-500 text-center"><%= data %></textarea> -->
+                <!-- <textarea type="textarea" name="details" placeholder="Enter Details" class="resize-none bg-zinc-800 block m-auto mb-3 text-2xl text-white placeholder-gray-500 text-center"></textarea> -->
+               
+                <input class="text-white rounded-md p-2 mt-6 bg-yellow-600" type="submit" value="Edit Filename">
+            </form>
+        </div>
+        <a class="text-blue-500 mt-20" href="/">Home</a>
+    </div>
+
+    <script src="scripts/script.js"></script>
+</body>
+
+</html>

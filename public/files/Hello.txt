@@ -1,0 +1,1 @@
+This is the notepad I created using ejs and node.
