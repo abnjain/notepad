@@ -3,6 +3,7 @@ const app = express();
 
 const path =  require("path");
 const fs = require("fs");
+require('dotenv').config()
 
 app.set("view engine", "ejs");
 app.use(express.json());
@@ -44,6 +45,6 @@ app.get("/delete/:filename", (req, res) => {
       });
 }); 
 
-app.listen(3004, () => {
+app.listen(process.env.PORT, () => {
     console.log("Server chl ria hai");
 });
