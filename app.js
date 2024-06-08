@@ -100,5 +100,5 @@ app.get("/delete/:filename", (req, res) => {
 }); 
 
 app.listen(process.env.PORT, () => {
-    console.log("Server chl ria hai", process.env.PORT);
+    console.log("Server chl ria hai");
 });
