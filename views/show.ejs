@@ -14,12 +14,12 @@
         <div class="note bg-zinc-900 rounded-md p-10 flex flex-col items-center justify-center">
             <h2 class="text-5xl mt-6"><%= filename %></h2>
             <h3 class="text-3xl mt-5 font-light"><%= data %></h3>
-            <div class="flex flex-wrap gap-5">
-                <a class="text-blue-500 mt-20" href="/edit/<%= filename %>">Edit Filename</a>
+            <div class="flex flex-wrap gap-16">
+                <a class="text-yellow-500 mt-20" href="/edit/<%= filename %>">Edit File</a>
                 <a class="text-red-500 mt-20" href="/delete/<%= filename %>">Delete File</a>
             </div>
         </div>
-        <a class="text-blue-500 mt-20" href="/">Home</a>
+        <a class="text-white underline text-2xl mt-24 hover:uppercase" href="/">Home</a>
     </div>
 
     <script src="scripts/script.js"></script>

@@ -24,13 +24,31 @@ app.post("/save", (req, res) => {
 
 app.get("/public/files/:filename", (req, res) => {
     fs.readFile(`./public/files/${req.params.filename}`, "utf-8", (err, data) => {
-       res.render("show", { filename: req.params.filename, data });
+        if (err) {
+            return res.status(404).send("File not found");
+        }
+        res.render("show", { filename: req.params.filename, data });
     });
 }); 
 
-app.get("/edit/:filename", (req, res, data) => {
-    res.render("edit", { filename: req.params.filename, data });
+app.get("/edit/:filename", (req, res) => {
+    fs.readFile(`./public/files/${req.params.filename}`, "utf-8", (err, data) => {
+        if (err) {
+            return res.status(404).send("File not found");
+        }
+        res.render("edit", { filename: req.params.filename, data });
+    });
 }); 
+
+app.post("/save/:filename", (req, res) => {
+    const filepath = `./public/files/${req.params.filename}`;
+    fs.writeFile(filepath, req.body.content, (err) => {
+        if (err) {
+            return res.status(500).send("Error saving file");
+        }
+        res.redirect(`/public/files/${req.params.filename}`);
+    });
+});
 
 app.post("/edit", (req, res) => {
     fs.rename( `./public/files/${req.body.title}` , `./public/files/${req.body.newTitle}`, (err) => {
@@ -39,6 +57,17 @@ app.post("/edit", (req, res) => {
     });
 }); 
 
+app.post("/rename/:filename", (req, res) => {
+    const oldPath = `./public/files/${req.params.filename}`;
+    const newPath = `./public/files/${req.body.newTitle.split(' ').join('')}.txt`;
+    fs.rename(oldPath, newPath, (err) => {
+        if (err) {
+            return res.status(500).send("Error renaming file");
+        }
+        res.redirect("/");
+    });
+});
+
 app.get("/delete/:filename", (req, res) => {
     fs.unlink(`./public/files/${req.params.filename}`, (err) => {
         res.redirect("/");
@@ -46,5 +75,5 @@ app.get("/delete/:filename", (req, res) => {
 }); 
 
 app.listen(process.env.PORT, () => {
-    console.log("Server chl ria hai");
+    console.log("Server chl ria hai", process.env.PORT);
 });
