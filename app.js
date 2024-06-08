@@ -41,14 +41,39 @@ app.get("/edit/:filename", (req, res) => {
 }); 
 
 app.post("/save/:filename", (req, res) => {
-    const filepath = `./public/files/${req.params.filename}`;
-    fs.writeFile(filepath, req.body.content, (err) => {
-        if (err) {
-            return res.status(500).send("Error saving file");
-        }
-        res.redirect(`/public/files/${req.params.filename}`);
-    });
+    console.log(req.body.newTitle);
+    const oldPath = `./public/files/${req.params.filename}`;
+    const newTitle = req.body.newTitle ? req.body.newTitle.split(' ').join('') : null;
+    const newPath = newTitle ? `./public/files/${newTitle}.txt` : oldPath;
+
+    // Function to save the file content
+    const saveFileContent = (path, content, callback) => {
+        fs.writeFile(path, content, (err) => {
+            if (err) {
+                return res.status(500).send("Error saving file");
+            }
+            callback();
+        });
+    };
+
+    // Rename the file if a new title is provided
+    if (newTitle) {
+        fs.rename(oldPath, newPath, (err) => {
+            if (err) {
+                return res.status(500).send("Error renaming file");
+            }
+            saveFileContent(newPath, req.body.content, () => {
+                res.redirect(`/public/files/${newTitle}.txt`);
+            });
+        });
+    } else {
+        // If no renaming, just write the content to the existing file
+        saveFileContent(oldPath, req.body.content, () => {
+            res.redirect(`/public/files/${req.params.filename}`);
+        });
+    }
 });
+
 
 app.post("/edit", (req, res) => {
     fs.rename( `./public/files/${req.body.title}` , `./public/files/${req.body.newTitle}`, (err) => {

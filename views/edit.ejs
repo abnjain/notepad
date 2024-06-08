@@ -2,33 +2,39 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Notepad</title>
-    <link rel="stylesheet" href="/styles/style.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Notepad - <%= filename %></title>
+    <link rel="stylesheet" href="/styles/style.css">
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
 <body class="bg-zinc-800 text-white">
     <div class="flex flex-col items-center justify-center h-screen">
         <div class="note bg-zinc-900 rounded-md p-10 flex flex-col items-center justify-center">
-            <form action="/rename/<%= filename %>" method="post" class="m-4 text-center">
-                <input type="text" name="title" class="bg-zinc-800 block m-auto mb-3 text-2xl text-zinc-400 placeholder-gray-500 text-center" value="<%= filename %>" />
-                <input type="text" name="newTitle" placeholder="Enter New Title" class="bg-zinc-800 block m-auto mb-3 text-2xl text-white placeholder-gray-500 text-center" />
-                <!-- <textarea type="textarea" name="details" placeholder="Enter Details" class="resize-none bg-zinc-800 block m-auto mb-3 text-2xl text-white placeholder-gray-500 text-center"><%= data %></textarea> -->
-                <!-- <textarea type="textarea" name="details" placeholder="Enter Details" class="resize-none bg-zinc-800 block m-auto mb-3 text-2xl text-white placeholder-gray-500 text-center"></textarea> -->
-               
-                <input class="text-white rounded-md p-2 mt-6 bg-yellow-600" type="submit" value="Edit Filename">
-            </form>
-            <form class="mt-5 flex flex-col justify-center items-center" method="POST" action="/save/<%= filename %>">
-                <textarea name="content" rows="5" cols="50" class="bg-zinc-800 text-white p-4 rounded-md w-full"><%= data %></textarea>
-                <button type="submit" class="bg-blue-500 mt-5 p-2 rounded-md text-white">Save File Changes</button>
+            <!-- Form for renaming the file -->
+            <form id="myForm" method="post" class="m-4 text-center">
+                <input type="text" name="oldTitle" class="bg-zinc-800 block m-auto mb-3 text-2xl text-zinc-400 placeholder-gray-500 text-center" value="<%= filename %>" />
+                <input type="text" name="newTitle" placeholder="Enter New Title" class="bg-zinc-800 block m-auto mb-3 text-2xl text-white placeholder-gray-500 text-center">
+                <!-- Button to trigger renaming -->
+                <button type="button" onclick="setAction('/rename/<%= filename %>')" class="bg-yellow-500 my-5 p-2 rounded-md text-white">Rename File</button>
+                <!-- Form for editing the file content -->
+                <textarea name="content" rows="5" cols="50" class="bg-zinc-800 text-white p-4 text-center rounded-md w-full"><%= data %></textarea>
+                <!-- Button to trigger saving -->
+                <button type="button" onclick="setAction('/save/<%= filename %>')" class="bg-blue-500 mt-5 p-2 rounded-md text-white">Save Changes</button>
             </form>
         </div>
         <a class="text-white underline text-2xl mt-10 hover:uppercase" href="/">Home</a>
     </div>
 
-    <script src="scripts/script.js"></script>
+    <script>
+        function setAction(actionUrl) {
+            var form = document.getElementById('myForm');
+            form.action = actionUrl;
+            form.submit();
+        }
+    </script>
+    <!-- <script src="scripts/script.js"></script> -->
 </body>
 
 </html>
